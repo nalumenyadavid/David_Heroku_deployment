@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Total sales prediction</title>
+  <link rel="stylesheet" href="static/CSS/style.css">
+</head>
+
+<body>
+ <div class="login">
+	<h1>Predict total sales</h1>
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}"method="post">
+		<input type="text" name="amount_invested_in_TV_ads" placeholder="Amount invested in TV ads (USD)" required="required" />
+        <input type="text" name="amount_invested_in_radio_ads" placeholder="Amount invested in Radio ads (USD)" required="required" />
+		<input type="text" name="amount_invested_in_newspaper_ads" placeholder="Amount invested in Newspaper ads (USD)" required="required" />
+
+        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+    </form>
+
+   <br>
+   <br>
+   {{ prediction_text }}
+
+ </div>
+
+</body>
+</html>
