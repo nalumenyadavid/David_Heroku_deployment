@@ -36,7 +36,7 @@ jobs:
         run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment jobs
-        uses: actions/download-artifact@v4.1.4
+        uses: actions/upload-artifact@v4.1.4
         with:
           name: python-app
           path: |
@@ -54,7 +54,7 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.4
         with:
           name: python-app
 
@@ -63,14 +63,14 @@ jobs:
 
       
       - name: Login to Azure
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D5231D6D478A4CA092FD7FCFE3A8D050 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E19852269D53499797D08DE74F53BDF4 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0682052E687D4E70B640BC9AA89741CB }}
 
       - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v4
         id: deploy-to-webapp
         with:
           app-name: 'sales-predict'
