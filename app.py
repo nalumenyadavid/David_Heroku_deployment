@@ -1,9 +1,6 @@
 import pickle
 from flask import Flask, request, render_template
-try:
-    from collections import Mapping
-except ImportError:
-    from collections.abc import Mapping  # Fallback for older Python versions
+from collections.abc import Mapping  
 
 app = Flask(__name__)
 
