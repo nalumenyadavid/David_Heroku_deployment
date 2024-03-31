@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Python version
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v3
         with:
           python-version: '3.11'
 
@@ -63,7 +63,7 @@ jobs:
 
       
       - name: Login to Azure
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_5176998DB5114A64AA7BA1DD61FFA0DD }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_FCEC6006C18D46409BBCF5C28C7F4E5A }}
