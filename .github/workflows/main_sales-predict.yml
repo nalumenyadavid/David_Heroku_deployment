@@ -70,7 +70,7 @@ jobs:
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0682052E687D4E70B640BC9AA89741CB }}
 
       - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v4
+        uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
           app-name: 'sales-predict'
