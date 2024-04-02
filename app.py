@@ -1,16 +1,21 @@
 import pickle
 from flask import Flask, request, render_template
-from collections.abc import Mapping  
+import os
 
 app = Flask(__name__)
 
 
+# Load the pickled model (ensure model.pkl is in the same directory)
+script_dir = os.path.dirname(os.path.realpath(__file__))
+model_path = os.path.join(script_dir,'model.pkl')
+#model = pickle.load(model_path)
+
 try:
-  with open('model.pkl', 'rb') as f:
-    model = pickle.load(f)
+    with open(model_path, 'rb') as f:
+        model = pickle.load(f)
 except FileNotFoundError:
-  print("Error: 'model.pkl' not found. Please upload the model.pkl file to your Heroku application.")
-  exit(1)
+    print("Error: 'model.pkl' not found. Please ensure the model exists.")
+    exit(1)
 
 @app.route('/')
 def home():
