@@ -1,15 +1,9 @@
 import pickle
 from flask import Flask, request, render_template
-import os
 
 app = Flask(__name__)
 
-
 # Load the pickled model (ensure model.pkl is in the same directory)
-#script_dir = os.path.dirname(os.path.realpath(__file__))
-#model_path = os.path.join(script_dir,'model.pkl')
-#model = pickle.load(model_path)
-
 try:
     with open('model.pkl', 'rb') as f:
         model = pickle.load(f)
@@ -32,9 +26,9 @@ def predict():
 
   if request.method == 'POST':
     try:
-    
       try:
-        int_features = [float(x) for x in request.form.values()]  
+        # Convert form values to floats, handle ValueError
+        int_features = [float(x) for x in request.form.values()]
       except ValueError:
         return render_template('index.html', prediction_text="Invalid input. Please enter numerical values.")
 
