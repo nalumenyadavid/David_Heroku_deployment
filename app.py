@@ -1,26 +1,42 @@
-import numpy as np
-from flask import Flask, request,render_template
 import pickle
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
-model = pickle.load(open('model.pkl', 'rb'))
+
+# Load the pickled model (ensure model.pkl is in the same directory)
+with open('model.pkl', 'rb') as f:
+model = pickle.load(f)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+  """
+  Renders the home page (index.html).
+  """
+  return render_template('index.html')
 
-@app.route('/predict',methods=['POST'])
+@app.route('/predict', methods=['POST'])
 def predict():
-    '''
-    For rendering results on HTML GUI
-    '''
-    int_features = [int(x) for x in request.form.values()]
-    final_features = [np.array(int_features)]
-    prediction = model.predict(final_features)
+  """
+  Predicts sales and renders results on the index.html page. Handles potential errors gracefully.
+  """
 
-    output = round(prediction[0], 2)
+  if request.method == 'POST':
+    try:
+      try:
+        # Convert form values to floats, handle ValueError
+        int_features = [float(x) for x in request.form.values()]
+      except ValueError:
+        return render_template('index.html', prediction_text="Invalid input. Please enter numerical values.")
 
-    return render_template('index.html', prediction_text='House price should be $ {}'.format(output))
+      final_features = [np.array(int_features)]
 
-if __name__ == "__main__":
-    app.run(debug=True)
+      prediction = model.predict(final_features)[0]
+      output = round(prediction, 2)
+
+      return render_template('index.html', prediction_text='Amount of total sales: $ {}'.format(output))
+    except Exception as e:
+      print(f"Error during prediction: {e}")
+      return render_template('index.html', prediction_text="An unexpected error occurred. Please try again later.")
+
+if __name__ == '__main__':
+  app.run(debug=True)
