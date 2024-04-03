@@ -34,9 +34,6 @@ def predict():
       output = round(prediction, 2)
 
       return render_template('index.html', prediction_text='Amount of total sales: $ {}'.format(output))
-    except Exception as e:
-      print(f"Error during prediction: {e}")
-      return render_template('index.html', prediction_text="An unexpected error occurred. Please try again later.")
 
 if __name__ == '__main__':
   app.run(debug=True)
